@@ -1,0 +1,45 @@
+From fe88bed7cdf86a003c55bd30da1b7d1fbd4c1207 Mon Sep 17 00:00:00 2001
+From: Davide Beatrici <git@davidebeatrici.dev>
+Date: Sun, 7 May 2023 00:42:22 +0200
+Subject: [PATCH] CMake: Rely on GNUInstallDirs for installation directories
+
+https://cmake.org/cmake/help/latest/module/GNUInstallDirs.html
+---
+ CMakeLists.txt | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5be0652..85f55f1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -12,6 +12,7 @@ include(EnableWarnings)
+ include(CTest)
+ include(CreateTestList)
+ include(CMakePackageConfigHelpers)
++include(GNUInstallDirs)
+ 
+ # configure requirements
+ set(CMAKE_C_STANDARD 11)
+@@ -266,16 +267,12 @@ write_basic_package_version_file("CwalkConfigVersion.cmake"
+   COMPATIBILITY SameMajorVersion)
+ 
+ install(TARGETS cwalk
+-  EXPORT CwalkTargets
+-  RUNTIME DESTINATION bin
+-  LIBRARY DESTINATION lib
+-  ARCHIVE DESTINATION lib
+-  PUBLIC_HEADER DESTINATION include)
++  EXPORT CwalkTargets)
+ 
+ install(FILES
+   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/CwalkConfig.cmake"
+-  DESTINATION lib/cmake/cwalk)
++  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/cwalk)
+ 
+ install(EXPORT CwalkTargets
+   FILE CwalkTargets.cmake
+-  DESTINATION lib/cmake/cwalk)
++  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/cwalk)
+-- 
+2.39.2
+
